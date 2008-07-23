@@ -65,8 +65,6 @@ if[FLUSH;
 	STDOUT"memory flushed (",$[count mem:first argv`flush;mem;"1"],"GB)";
 	stuff:1+(floor prd 125000000,1^first"E"$first argv`flush)#999;stuff:()]
 
-\w
-
 if[RUN;
 	STDOUT(string .z.f)," - ",(string `date$.z.Z)," ",(string `minute$.z.Z)," ",(string .z.h)," - times in ms for single execution";
 	STDOUT"* local file";read[lrfile];write[lwfile];
