@@ -19,10 +19,12 @@ lh:`$":127.0.0.1:",string localport:5555
 LH:not 0=@[hopen;lh;0]
 
 ffile:`:file.test / local fileops test
-lrfile:`:read.test / local read file
-lwfile:`:write.test / local write file
-rrfile:` sv(hsym`$first argv`rl),`read.test
-rwfile:` sv(hsym`$first argv`rl),`write.test
+rrfile:lrfile:`:read.test / local read file
+rwfile:lwfile:`:write.test / local write file
+if[RL;
+	rrfile:` sv(hsym`$first argv`rl),`read.test;
+	rwfile:` sv(hsym`$first argv`rl),`write.test;
+	]
 msstring:{(string x)," ms"}
 
 SAMPLESIZE:5000000
@@ -61,7 +63,9 @@ if[PREPARE;
 
 if[FLUSH;
 	STDOUT"memory flushed (",$[count mem:first argv`flush;mem;"1"],"GB)";
-	key each(floor 1^"E"$first argv`flush)#key 250000000]
+	stuff:1+(floor prd 125000000,1^first"E"$first argv`flush)#999;stuff:()]
+
+\w
 
 if[RUN;
 	STDOUT(string .z.f)," - ",(string `date$.z.Z)," ",(string `minute$.z.Z)," ",(string .z.h)," - times in ms for single execution";
