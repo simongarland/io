@@ -78,3 +78,7 @@ if[CLEANUP;
 	if[RL;@[hdel;rrfile;()]];
 	STDOUT"tmpfiles deleted"]
 \\
+/ on recent linux kernels cache can be cleared with:
+/ sync; echo 3 > /proc/sys/vm/drop_caches
+/ (have to execute that as root or sudo)
+
