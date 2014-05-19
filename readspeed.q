@@ -12,7 +12,7 @@ RUN:`run in argvk
 if[PREPARE;
 	t:([]hh:100000000?100000h);
 	update sshh:asc hh from `t;
-	update ii:2*hh from `t;
+	update ii:`int$2*hh from `t;
 	update bb:hh=4567h from `t;
 	update cc:100000000?.Q.A from `t;
 	rsave `t;
@@ -46,8 +46,8 @@ if[RUN;
 	STDOUT"million records/second(h): ",string floor 0.5+(count t)%1000*value"\\t select i from t where hh=4567h";
 	STDOUT"* int";
 	STDOUT"from disk";
-	STDOUT"million records/second(i): ",string floor 0.5+(count t)%1000*value"\\t select i from t where ii=4567";
+  STDOUT"million records/second(i): ",string floor 0.5+(count t)%1000*value"\\t select i from t where ii=4567i";
 	STDOUT"from memory";
-	STDOUT"million records/second(i): ",string floor 0.5+(count t)%1000*value"\\t select i from t where ii=4567"]
+	STDOUT"million records/second(i): ",string floor 0.5+(count t)%1000*value"\\t select i from t where ii=4567i"]
 
 \\

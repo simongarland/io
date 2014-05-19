@@ -33,13 +33,13 @@ read:{[file]
 	STDOUT"hclose hopen`",(string file)," ",msstring 0.0001*value"\\t do[10000;hclose hopen`",(string file),"]";
 	STDOUT"read `",(string file)," - ",(string floor 0.5+1000*ssm%value"\\t read1`",string file)," MB/sec";
 	STDOUT"read `",(string file)," - ",(string floor 0.5+1000*ssm%value"\\t read1`",string file)," MB/sec (cached)";}
-write:{[file]STDOUT"write `",(string file)," - ",(string floor 0.5+1000*ssm%value "\\t `",(string file)," 1:SAMPLESIZE#key 11+rand 111")," MB/sec";hdel file;}
+write:{[file]STDOUT"write `",(string file)," - ",(string floor 0.5+1000*ssm%value "\\t `",(string file)," 1:SAMPLESIZE#`int$key 11+rand 111")," MB/sec";hdel file;}
 
 fileops:{sx:string x;
-	STDOUT".[`",sx,";();,;2 3] ",msstring 0.001*value"\\t do[1000;.[`",sx,";();,;2 3]]";
-	STDOUT".[`",sx,";();:;2 3] ",msstring 0.001*value"\\t do[1000;.[`",sx,";();:;2 3]]";
+	STDOUT".[`",sx,";();,;2 3i] ",msstring 0.001*value"\\t do[1000;.[`",sx,";();,;2 3i]]";
+	STDOUT".[`",sx,";();:;2 3i] ",msstring 0.001*value"\\t do[1000;.[`",sx,";();:;2 3i]]";
 	H::hopen x;
-	STDOUT"append (2 3) to handle ",msstring 0.00001*value"\\t do[100000;H(2 3)]";
+	STDOUT"append (2 3i) to handle ",msstring 0.00001*value"\\t do[100000;H(2 3i)]";
 	STDOUT"hcount`",sx," ",msstring 0.00001*value"\\t do[100000;hcount`",sx,"]";
 	STDOUT"read1`",sx," ",msstring 0.0001*value"\\t do[10000;read1`",sx,"]";
 	STDOUT"value`",sx," ",msstring 0.0001*value"\\t do[10000;value`",sx,"]";
@@ -54,16 +54,16 @@ comm:{sx:string x;
 
 if[PREPARE;
 	/ prepare files for read, then do something else for a while to get them out of the cache
-	if[RL;t:rrfile 1:SAMPLESIZE#key 11+rand 111];
-	t:lrfile 1:SAMPLESIZE#key 11+rand 111;
-	t:.[ffile;();:;2 3];
+	if[RL;t:rrfile 1:SAMPLESIZE#`int$key 11+rand 111];
+	t:lrfile 1:SAMPLESIZE#`int$key 11+rand 111;
+	t:.[ffile;();:;2 3i];
 	STDOUT"start local q server with: q -p ",string localport;
 	/ value"\\start \"hardware test\" q -p ",string localport;
 	STDOUT"tmpfiles created"]
 
 if[FLUSH;
 	STDOUT"memory flushed (",$[count mem:first argv`flush;mem;"1"],"GB)";
-	stuff:1+(floor 0.5+1^first"E"$first argv`flush)#enlist 125000000#999;stuff:()]
+	stuff:1+(floor 0.5+1^first"E"$first argv`flush)#enlist 125000000#999i;stuff:()]
 
 if[RUN;
 	STDOUT(string .z.f)," - ",(string `date$.z.Z)," ",(string `minute$.z.Z)," ",(string .z.h)," - times in ms for single execution";
